@@ -7,5 +7,6 @@ import (
 
 func main() {
 	e := echo.New()
+	www.Register(e)
 	www.StartUp(e)
 }
