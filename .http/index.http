@@ -1,0 +1,9 @@
+GET http://localhost:8080/
+Content-Type: application/json
+
+> {%
+  var csrfCookie = response.headers.valuesOf("Set-Cookie")[0]
+  var csrfValue = csrfCookie.substring(csrfCookie.indexOf("=") + 1, csrfCookie.indexOf(";"))
+  client.log("csrf: " + csrfValue)
+  client.global.set("csrf", csrfValue)
+ %}

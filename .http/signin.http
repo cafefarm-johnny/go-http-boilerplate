@@ -1,0 +1,17 @@
+POST http://localhost:8080/api/v1/users/signin
+Content-Type: application/json
+X-CSRF-Token: {{csrf}}
+Cookie: _csrf={{csrf}}
+Cookie: my-session={{my-session}}
+
+{
+  "username": "johnny",
+  "password": "j1234"
+}
+
+> {%
+  var sessionCookie = response.headers.valuesOf("Set-Cookie")[1]
+  var sessionValue = sessionCookie.split(";")[0].split("=")[1]
+  client.log("session: " + sessionValue)
+  client.global.set("my-session", sessionValue)
+ %}
