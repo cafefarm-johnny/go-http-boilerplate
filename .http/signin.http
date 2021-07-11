@@ -10,8 +10,11 @@ Cookie: my-session={{my-session}}
 }
 
 > {%
-  var sessionCookie = response.headers.valuesOf("Set-Cookie")[1]
-  var sessionValue = sessionCookie.split(";")[0].split("=")[1]
-  client.log("session: " + sessionValue)
-  client.global.set("my-session", sessionValue)
+  response.headers.valuesOf("Set-Cookie").forEach(function(cookie) {
+     if (cookie.startsWith("my-session")) {
+         var sessionCookie = cookie.split("=")[1].split(";")[0]
+         client.log(sessionCookie)
+         client.global.set("my-session", sessionCookie)
+     }
+  });
  %}
